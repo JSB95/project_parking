@@ -1,60 +1,41 @@
 package KJW;
 
-import java.util.ArrayList;
-
 public class Car {
 	
-	// field
+	// 필드
+	private String date;
+	private int car; // 차량 번호
 	
-	static ArrayList<Car> carNum = new ArrayList<Car>();
-	private int min;
 	
-	public Car() {
-		// TODO Auto-generated constructor stub
+	
+	// 생성자
+	public Car() {}
+
+	public Car(String date, int car) {
+		this.date = date;
+		this.car = car;
 	}
 
-	public Car(ArrayList<Car> carNum, int min) {
-		super();
-		this.carNum = carNum;
-		this.min = min;
-	}
-
-	public ArrayList<Car> getCarNum() {
-		return carNum;
-	}
-
-	public void setCarNum(ArrayList<Car> carNum) {
-		this.carNum = carNum;
-	}
-
-	public int getMin() {
-		return min;
-	}
-
-	public void setMin(int min) {
-		this.min = min;
-	}
 	
-	// method
-	
-	public void inCar(int car_num) {
-		
-	};
-	
-	public void outCar(int car_num) {
-		
-	};
-	
-	public void car_save() {
-		
-	};
-	
-	public void car_load() {
-		
-	};
-	
-	
-	
+	// 메소드
 	
 
+	public int getCar() {
+		return car;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	public void setCar(int car) {
+		this.car = car;
+	}
+
+	
+	
 }
