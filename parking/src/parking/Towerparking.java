@@ -1,12 +1,19 @@
 package parking;
 
+import java.util.Date;
 import java.util.Scanner;
 
 public class Towerparking {
 	
+	public static String[] tower = { "[ ]", "[ ]", "[ ]", "[ ]",
+									"[ ]", "[ ]", "[ ]", "[ ]",
+									"[ ]", "[ ]", "[ ]", "[ ]" };
+	Date date = new Date();
+
+	
 	public static void main(String[] args) {
 		
-		String[][] tower = new String[3][4];
+		
 		
 		Scanner scanner = new Scanner(System.in);
 		
@@ -15,11 +22,25 @@ public class Towerparking {
 				try {
 					Car car = new Car();
 					Count count = new Count();
+					for (int i = 0; i < tower.length; i++) {
+						
+						System.out.print(tower[i]);
+
+						// 줄바꿈
+						if (i % 4 == 3) {
+							System.out.println("");
+						}	
+					}
 					System.out.println("1. 입차 2. 출차 3. 매출확인"); int ch = scanner.nextInt();
 				
 					if (ch == 1) {
 						System.out.print("차량 번호 입력 : "); int car_num = scanner.nextInt();
-						car.inCar(car_num);
+						boolean result = car.inCar(car_num);
+						if(result) {
+							System.out.println("입차가 완료되었습니다.");
+						}else {
+							System.out.println("만차입니다.");
+						}
 					} else if (ch == 2) {
 						System.out.print("차량 번호 입력 : "); int car_num = scanner.nextInt();
 						car.outCar(car_num);

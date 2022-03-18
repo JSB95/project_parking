@@ -1,5 +1,6 @@
 package parking;
 
+
 import java.util.ArrayList;
 
 public class Car {
@@ -7,7 +8,9 @@ public class Car {
 	// field
 	
 	static ArrayList<Car> carNum = new ArrayList<Car>();
-	private int min;
+	private int min, car;
+	String time;
+	
 	
 	public Car() {
 		// TODO Auto-generated constructor stub
@@ -37,8 +40,20 @@ public class Car {
 	
 	// method
 	
-	public void inCar(int car_num) {
+	public boolean inCar(int car_num) {
 		
+
+		
+		// ÀÔÂ÷
+		for (int i = 0; i <Towerparking.tower.length; i++) {
+			if (Towerparking.tower[i].equals("[ ]") ) {
+				Towerparking.tower[i] = "[ " + car_num + " ]";
+				return true;
+			} 
+		}
+		
+		
+		return false;
 	};
 	
 	public void outCar(int car_num) {
