@@ -48,11 +48,12 @@ public class Car {
 		for (int i = 0; i <Towerparking.tower.length; i++) {
 			if (Towerparking.tower[i].equals("[ ]") ) {
 				Towerparking.tower[i] = "[ " + car_num + " ]";
+				car_save();
+				
 				return true;
-			} 
+			}
+			
 		}
-		
-		
 		return false;
 	};
 	
