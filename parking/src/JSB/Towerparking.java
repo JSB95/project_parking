@@ -37,7 +37,7 @@ public class Towerparking {
 						System.out.println("0000~9999 사이의 차량번호를 입력해주세요.[주차실패]");	
 					}else if(result==3) {
 						
-						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-hh-mm");
+						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm");
 						String intime = sdf.format(date);
 						boolean result2 = Controller.inCar(intime, car_num);
 						if(result2) {

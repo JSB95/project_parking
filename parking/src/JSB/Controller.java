@@ -101,10 +101,12 @@ public class Controller {
 	
 	// 금액 계산 메소드
 	public static void count(String carnum) throws ParseException {
+		DecimalFormat decimalFormat = new DecimalFormat("###,###원");
 		Date date = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-hh-mm", Locale.KOREA);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm", Locale.KOREA);
 		// 출차 하는 시간
-		String dateend = "2022-04-19-06-50";
+		String dateend = "2022-03-25-10-02";
+		long fee = 0;
 		
 		for (Car temp : carlist) {
 
@@ -112,14 +114,31 @@ public class Controller {
 			Date d2 = sdf.parse(dateend);
 			
 			long diff = d2.getTime() - d1.getTime();
-			long sec = diff / 1000;
 			long min = diff / (1000 * 60);
-			long hour = diff / (1000 * 60 * 60);
 			long day = diff / (1000 * 60 * 60 * 24);
-			System.out.println("초 차이 : " + sec);
-			System.out.println("분 차이 : " + min);
-			System.out.println("시 차이 : " + hour);
-			System.out.println("일 차이 : " + day);
+			if (day > 0) {
+				
+				System.out.println("주차시간 : " + day + "일" + (min - 1440 * day) + "분");
+				long min1 = (long) Math.ceil((min - 1440 * day) / 10.0) * 10;
+				min = min1;
+				fee = 50000 * day + min * 100;
+			} else {
+				System.out.println("주차시간 : " + day + "일" + min + "분");
+				long min1 = (long) Math.ceil((min - 1440 * day) / 10.0) * 10;
+				min = min1;
+				fee = min * 100 - 3000;
+				if (fee > 50000) {
+					fee = 50000;
+				}
+				if (min <= 30) {
+					fee = 0;
+				}
+				
+			}
+			
+			
+			System.out.println("금액 : " + decimalFormat.format(fee));
+			return;
 
 		}
 		
@@ -128,7 +147,7 @@ public class Controller {
 	// 차량 저장 메소드
 	public static void car_save() {
 		try {
-			FileOutputStream outputStream = new FileOutputStream("D:/java/차량파일.txt");
+			FileOutputStream outputStream = new FileOutputStream("C:/java/차량파일.txt");
 			for(Car temp : carlist) {
 				String carfile = temp.getDate()+","+temp.getCar()+","+temp.getTower()+"\n";
 				outputStream.write(carfile.getBytes());
@@ -143,7 +162,7 @@ public class Controller {
 	// 차량 불러오기 메소드
 	public static void car_load() {
 		try {
-			FileInputStream fileInputStream = new FileInputStream("D:/java/차량파일.txt");
+			FileInputStream fileInputStream = new FileInputStream("C:/java/차량파일.txt");
 			byte[] bytes = new byte[1024];
 			fileInputStream.read(bytes);
 			String file = new String(bytes);
@@ -180,7 +199,7 @@ public class Controller {
 	public static void towersave() {
 
 		try {
-			FileOutputStream outputStream = new FileOutputStream("D:/java/타워파일.txt");
+			FileOutputStream outputStream = new FileOutputStream("C:/java/타워파일.txt");
 			for(String temp : tower) {
 				String towerfile = temp+"\n";
 				outputStream.write(towerfile.getBytes());
@@ -193,7 +212,7 @@ public class Controller {
 	// 타워 불러오기 메소드
 	public static void towerload() {
 		try {
-			FileInputStream fileInputStream = new FileInputStream("D:/java/타워파일.txt");
+			FileInputStream fileInputStream = new FileInputStream("C:/java/타워파일.txt");
 			byte[] bytes = new byte[1024];
 			fileInputStream.read(bytes);
 			String file = new String(bytes);
