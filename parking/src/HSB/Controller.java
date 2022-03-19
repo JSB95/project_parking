@@ -143,7 +143,7 @@ public class Controller {
 				
 			System.out.println("금액 : " + decimalFormat.format(fee));
 			
-	
+			
 			
 			return;
 
@@ -200,19 +200,23 @@ public class Controller {
 	// 매출확인 메소드
 	public static void list(int year, int month) {
 		Calendar calendar = Calendar.getInstance();
-		System.out.println("-----------"+month+"월 sales list-----------");
+		System.out.println("-----------"+month+"월 sales list-----------------");
 		while( true ) {
-					calendar.set(year, month-1, 1);
-					int week= calendar.get(Calendar.DAY_OF_WEEK);
+			if(month<13) {		
+			calendar.set(year, month-1, 1);
 					int day = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-				System.out.println("\t일"+"\t\t총매출");
+				System.out.println("\tday"+"\t\tsales");
 				System.out.println();
 
 				for(int i = 1; i<= day ; i++) {
 					System.out.println("\t"+i+"\t\t(일별계산목록)");
+					
+			
 				}
 				System.out.println("");
-			
+			}else {
+				System.out.println("알수없는행동입니다.");
+			}
 				break;
 		}	
 		 	
