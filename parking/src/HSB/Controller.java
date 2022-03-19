@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -139,9 +140,11 @@ public class Controller {
 
 			}
 			
-			
-			System.out.println("금액 : " + decimalFormat.format(fee));
 				
+			System.out.println("금액 : " + decimalFormat.format(fee));
+			
+	
+			
 			return;
 
 		}
@@ -196,10 +199,24 @@ public class Controller {
 		
 	// 매출확인 메소드
 	public static void list(int year, int month) {
-		 System.out.println("-----------------"+month+"월 sales list----------------");
-		
+		Calendar calendar = Calendar.getInstance();
+		System.out.println("-----------"+month+"월 sales list-----------");
+		while( true ) {
+					calendar.set(year, month-1, 1);
+					int week= calendar.get(Calendar.DAY_OF_WEEK);
+					int day = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+				System.out.println("\t일"+"\t\t총매출");
+				System.out.println();
+
+				for(int i = 1; i<= day ; i++) {
+					System.out.println("\t"+i+"\t\t(일별계산목록)");
+				}
+				System.out.println("");
+			
+				break;
+		}	
 		 	
-		 System.out.println("--------------------------------------------------------");
+		 System.out.println("-----------------------------------------");
 		 return;
 	}
 		
