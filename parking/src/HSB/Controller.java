@@ -17,9 +17,7 @@ public class Controller {
 	
 	// 입차 메소드
 	public static boolean inCar(String a, int car_num) {
-		
 
-		
 		// 입차
 		for (int i = 0; i <Towerparking.tower.length; i++) {
 			if (Towerparking.tower[i].equals("[ ]") ) {
@@ -30,15 +28,24 @@ public class Controller {
 				car_save();
 				
 				return true;
-			}
-			
+			}		
 		}
 		return false;
 	};
 	
 	// 출차 메소드
-	public static void outCar(int car_num) {
+	public static boolean outCar(String b , int car_num) {
 		
+		for(int i =0; i <Towerparking.tower.length; i++ ) {
+			if(Towerparking.tower[i].equals(String.valueOf("[ " + car_num + " ]"))) {
+				Towerparking.tower[i]  = "[ ]";
+				
+				carlist.remove(i);
+				return true;
+			}
+			
+		}
+		return false;
 	};
 	
 	// 금액 계산 메소드

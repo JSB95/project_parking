@@ -20,16 +20,42 @@ public class Towerparking {
 					for(Car temp : Controller.carlist) {
 						System.out.println(temp.getCar()+"\t"+temp.getDate());
 					}
-					System.out.println("1. 입차 2. 출차 3. 매출확인"); int ch = scanner.nextInt();
-				
+					System.out.println("-----------------------");
+					System.out.println("1. 입차 2. 출차 3. 매출확인"); 
+					System.out.println("-----------------------");
+					int ch = scanner.nextInt();
+					//입차
 					if (ch == 1) {
 						String a = date.toString();
 						System.out.println(a);
 						System.out.print("차량 번호 입력 : "); int car_num = scanner.nextInt();
+						System.out.println("*****현재 주차된 리스트 ******");
 						Controller.inCar(a, car_num);
-					} else if (ch == 2) {
-						System.out.print("차량 번호 입력 : "); int car_num = scanner.nextInt();
-						Controller.outCar(car_num);
+						System.out.println("*************************");
+					} 
+					//출차
+					else if (ch == 2) {
+						String b = date.toString();
+						System.out.println(b);
+						System.out.print("차량 번호 입력 : "); 
+						int car_num = scanner.nextInt();
+						boolean result =Controller.outCar(b , car_num);
+						System.out.println("차량번호 : "+car_num);
+						System.out.println("출차시간 : "+b);
+						System.out.println("결제금액를 진행하시겠습니까?");
+						if(result==true) {
+							System.out.println("1.결제하기 2.뒤로가기");
+							int ch1= scanner.nextInt();
+							if(ch1==1) {}
+							else if(ch1==2) {}
+							else {
+								System.out.println("알수없는행동입니다.");
+							}
+						}else {
+							System.out.println("차 번호가 없습니다.");
+						}
+						
+					//매출확인
 					} else if (ch == 3) {
 						System.out.print("연도 : "); int year = scanner.nextInt();
 						System.out.print("월 : ");	int month = scanner.nextInt();
