@@ -52,6 +52,7 @@ public class Towerparking {
 						System.out.print("차량 번호 입력 : "); int car_num = scanner.nextInt();
 						int result = Controller.check(car_num);
 						if(result==1) {
+							
 							Controller.outCar(car_num);
 							
 							System.out.println("출차가 완료되었습니다.");

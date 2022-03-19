@@ -26,16 +26,14 @@ public class Controller {
 									"[    ]", "[    ]", "[    ]", "[    ]" };
 	
 	
+	
 	// 출력 메소드
 	public static void print() {
 		for(int i=0; i<tower.length; i++) {
 			System.out.print(tower[i]);
 			if(i%4==3) System.out.println();
 		}
-		
-		int i=0;
-		
-		
+
 	}
 	
 	// 중복체크, 유효성검사 메소드
@@ -105,15 +103,21 @@ public class Controller {
 	public static void count(String carnum) throws ParseException {
 		for(int i=0; i<carlist.size(); i++) {
 			if(carlist.get(i).getCar().equals(carnum)) {
+			System.out.println(carlist.get(i).getDate());
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-hh-mm");
+			Date date = new Date();
+			String outtime = sdf.format(date);
+			System.out.println(outtime);
 			
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-hh-mm");
-				Date intime = sdf.parse(carlist.get(i).getDate());
-				Instant instant1 = intime.toInstant(); // 입차시간
-				Instant instant2 = Instant.now(); // 출차시간
-				System.out.println("차이(분): "+instant1.until(instant2, ChronoUnit.MINUTES) );
-				return;
+			String[] temp = carlist.get(i).getDate().split("-");
+			String[] temp2 = outtime.split("-");
+				
+			int year =Integer.parseInt(temp2[0])-Integer.parseInt(temp[0]);
+			
+			
+			return;
 			}
-		}
+		} // for end
 		
 		
 	}
@@ -122,16 +126,11 @@ public class Controller {
 
 	// 차량 저장 메소드
 	public static void car_save() {
-		// 리스트내 모든 게시물을 파일에 저장
 		try {
-			// 1. 파일출력 클래스
 			FileOutputStream outputStream = new FileOutputStream("D:/java/차량파일.txt");
-			// 2. 파일에 작성할 내용 [ 한줄씩 = 게시물 1개씩 = 객체 1개씩 ]
 			for(Car temp : carlist) {
-				String 작성내용 = temp.getDate()+","+temp.getCar()+","+temp.getTower()+"\n";
-			// 3. 내용[문자열] -> 바이트열 변환 [ 외부통신(스트림) : 통신단위 : 바이트 ]
-			// 4. 내보내기 [ write() ]
-				outputStream.write(작성내용.getBytes());
+				String carfile = temp.getDate()+","+temp.getCar()+","+temp.getTower()+"\n";
+				outputStream.write(carfile.getBytes());
 			}
 		}catch(Exception e) {
 			System.out.println("알림)) 파일 저장 실패(관리자에게 문의)");
@@ -141,26 +140,18 @@ public class Controller {
 	// 차량 불러오기 메소드
 	public static void car_load() {
 		try {
-			// 1. 파일 입력 클래스
 			FileInputStream fileInputStream = new FileInputStream("D:/java/차량파일.txt");
-			// 2. 바이트 배열 선언
 			byte[] bytes = new byte[1024];
-			// 3. 모든 바이트 읽어와서 바이트에 저장
 			fileInputStream.read(bytes);
-			// 4. 바이트 -> 문자열 변환
 			String file = new String(bytes);
-			// 5. 문자열 자르기 [ 한줄씩(\n) -> 1개객체 ]
-			String[] boards = file.split("\n");
-			// 6. 문자열 자르기 [ (,) -> 각 필드 ]
-			int i=0; // 인덱스용
-			for(String temp : boards) { 
-				if(i+1==boards.length) break;			
+			String[] carfile = file.split("\n");
+			int i=0; 
+			for(String temp : carfile) { 
+				if(i+1==carfile.length) break;			
 				String[] field = temp.split(",");
-				// 7. 객체화
 				Car car = new Car(field[0], field[1], field[2]);
-				// 8. 리스트 담기
 				carlist.add(car);
-				i++; // 인덱스 증가
+				i++; 
 			}
 			
 		} catch(Exception e) {
@@ -184,16 +175,12 @@ public class Controller {
 	
 	// 타워 저장 메소드
 	public static void towersave() {
-		// 리스트내 모든 게시물을 파일에 저장
+
 		try {
-			// 1. 파일출력 클래스
 			FileOutputStream outputStream = new FileOutputStream("D:/java/타워파일.txt");
-			// 2. 파일에 작성할 내용 [ 한줄씩 = 게시물 1개씩 = 객체 1개씩 ]
 			for(String temp : tower) {
-				String 작성내용 = temp+"\n";
-			// 3. 내용[문자열] -> 바이트열 변환 [ 외부통신(스트림) : 통신단위 : 바이트 ]
-			// 4. 내보내기 [ write() ]
-				outputStream.write(작성내용.getBytes());
+				String towerfile = temp+"\n";
+				outputStream.write(towerfile.getBytes());
 			}
 		}catch(Exception e) {
 			System.out.println("알림)) 파일 저장 실패(관리자에게 문의)");
@@ -203,23 +190,15 @@ public class Controller {
 	// 타워 불러오기 메소드
 	public static void towerload() {
 		try {
-			// 1. 파일 입력 클래스
 			FileInputStream fileInputStream = new FileInputStream("D:/java/타워파일.txt");
-			// 2. 바이트 배열 선언
 			byte[] bytes = new byte[1024];
-			// 3. 모든 바이트 읽어와서 바이트에 저장
 			fileInputStream.read(bytes);
-			// 4. 바이트 -> 문자열 변환
 			String file = new String(bytes);
-			// 5. 문자열 자르기 [ 한줄씩(\n) -> 1개객체 ]
 			String[] field = file.split("\n");
-			// 6. 문자열 자르기 [ (,) -> 각 필드 ]
 			int i=0; // 인덱스용
 			for(String temp : field) { 
 				if(i+1==field.length) break;			
-				// 7. 객체화
 				String tower1 = new String(temp);
-				// 8. 리스트 담기
 				tower[i]=tower1;
 				i++; // 인덱스 증가
 			}
