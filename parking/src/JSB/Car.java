@@ -1,60 +1,51 @@
 package JSB;
 
-import java.util.ArrayList;
-
 public class Car {
 	
-	// field
+	// 필드
+	private String date; // 입차 날짜/시간
+	private String car; // 차량 번호
+	private String tower; // 주차 위치
 	
-	static ArrayList<Car> carNum = new ArrayList<Car>();
-	private int min;
 	
-	public Car() {
-		// TODO Auto-generated constructor stub
+	// 생성자
+	public Car() {}
+
+	public Car(String date, String car, String tower) {
+		this.date = date;
+		this.car = car;
+		this.tower = tower;
 	}
 
-	public Car(ArrayList<Car> carNum, int min) {
-		super();
-		this.carNum = carNum;
-		this.min = min;
-	}
 
-	public ArrayList<Car> getCarNum() {
-		return carNum;
-	}
-
-	public void setCarNum(ArrayList<Car> carNum) {
-		this.carNum = carNum;
-	}
-
-	public int getMin() {
-		return min;
-	}
-
-	public void setMin(int min) {
-		this.min = min;
-	}
 	
-	// method
-	
-	public void inCar(int car_num) {
-		
-	};
-	
-	public void outCar(int car_num) {
-		
-	};
-	
-	public void car_save() {
-		
-	};
-	
-	public void car_load() {
-		
-	};
-	
-	
-	
+	// 메소드
 	
 
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	public String getCar() {
+		return car;
+	}
+
+	public void setCar(String car) {
+		this.car = car;
+	}
+
+	public String getTower() {
+		return tower;
+	}
+
+	public void setTower(String tower) {
+		this.tower = tower;
+	}
+	
+	
+	
 }
