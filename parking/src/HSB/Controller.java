@@ -145,6 +145,7 @@ public class Controller {
 			
 			
 			
+			
 			return;
 
 		}
@@ -200,20 +201,23 @@ public class Controller {
 	// 매출확인 메소드
 	public static void list(int year, int month) {
 		Calendar calendar = Calendar.getInstance();
-		System.out.println("-----------"+month+"월 sales list-----------------");
+		System.out.println("-----------"+month+"월 sales list----------------");
 		while( true ) {
-			if(month<13) {		
+			
+			if(month<13) {
+				if(0<month) {
 			calendar.set(year, month-1, 1);
 					int day = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
 				System.out.println("\tday"+"\t\tsales");
 				System.out.println();
 
 				for(int i = 1; i<= day ; i++) {
-					System.out.println("\t"+i+"\t\t(일별계산목록)");
-					
-			
+					System.out.println("\t"+i+"\t\t"+countlist);
 				}
-				System.out.println("");
+				System.out.println();
+				}else {
+					System.out.println("알수없는행동입니다.");
+				}
 			}else {
 				System.out.println("알수없는행동입니다.");
 			}
