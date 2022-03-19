@@ -18,9 +18,7 @@ public class Count {
 	}
 
 	
-	
 	// ¸Ş¼Òµå
-	
 	public int getYear() {
 		return year;
 	}
@@ -44,6 +42,5 @@ public class Count {
 	public void setDay(int day) {
 		this.day = day;
 	}
-
 
 }
