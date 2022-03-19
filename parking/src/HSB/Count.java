@@ -1,38 +1,49 @@
 package HSB;
 
-import java.util.ArrayList;
+
 
 public class Count {
 	
-	ArrayList<Count> countlist = new ArrayList<Count>();
-	int year, month, day;
+	// 필드
+	private int year, month, day;
 	
+	// 생성자
 	public Count() {
-		// TODO Auto-generated constructor stub
 	}
 
-	public Count(ArrayList<Count> countlist, int year, int month, int day) {
-		super();
-		this.countlist = countlist;
+	public Count(int year, int month, int day) {
 		this.year = year;
 		this.month = month;
 		this.day = day;
 	}
+
 	
 	
-	public void save() {
-		
-	}
+	// 메소드
 	
-	public void load() {
-		
+	public int getYear() {
+		return year;
 	}
-	
-	public void count() {
-		
+
+	public void setYear(int year) {
+		this.year = year;
 	}
-	public void list(int year, int month) {
-		
+
+	public int getMonth() {
+		return month;
 	}
+
+	public void setMonth(int month) {
+		this.month = month;
+	}
+
+	public int getDay() {
+		return day;
+	}
+
+	public void setDay(int day) {
+		this.day = day;
+	}
+
 
 }
