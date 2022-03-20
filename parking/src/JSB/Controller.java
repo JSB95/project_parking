@@ -105,7 +105,7 @@ public class Controller {
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm", Locale.KOREA);
 		// 출차 하는 시간
-		String dateend = "2022-03-25-10-02";
+		String dateend = sdf.format(date);
 		long fee = 0;
 		
 		for (Car temp : carlist) {
@@ -147,7 +147,7 @@ public class Controller {
 	// 차량 저장 메소드
 	public static void car_save() {
 		try {
-			FileOutputStream outputStream = new FileOutputStream("C:/java/차량파일.txt");
+			FileOutputStream outputStream = new FileOutputStream("D:/java/차량파일.txt");
 			for(Car temp : carlist) {
 				String carfile = temp.getDate()+","+temp.getCar()+","+temp.getTower()+"\n";
 				outputStream.write(carfile.getBytes());
@@ -162,7 +162,7 @@ public class Controller {
 	// 차량 불러오기 메소드
 	public static void car_load() {
 		try {
-			FileInputStream fileInputStream = new FileInputStream("C:/java/차량파일.txt");
+			FileInputStream fileInputStream = new FileInputStream("D:/java/차량파일.txt");
 			byte[] bytes = new byte[1024];
 			fileInputStream.read(bytes);
 			String file = new String(bytes);
@@ -199,7 +199,7 @@ public class Controller {
 	public static void towersave() {
 
 		try {
-			FileOutputStream outputStream = new FileOutputStream("C:/java/타워파일.txt");
+			FileOutputStream outputStream = new FileOutputStream("D:/java/타워파일.txt");
 			for(String temp : tower) {
 				String towerfile = temp+"\n";
 				outputStream.write(towerfile.getBytes());
@@ -212,7 +212,7 @@ public class Controller {
 	// 타워 불러오기 메소드
 	public static void towerload() {
 		try {
-			FileInputStream fileInputStream = new FileInputStream("C:/java/타워파일.txt");
+			FileInputStream fileInputStream = new FileInputStream("D:/java/타워파일.txt");
 			byte[] bytes = new byte[1024];
 			fileInputStream.read(bytes);
 			String file = new String(bytes);

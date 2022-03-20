@@ -22,9 +22,7 @@ public class Towerparking {
 					
 					Controller.print();
 					
-					for(Car temp : Controller.carlist) { // 확인용 임시 데이터
-						System.out.println(temp.getCar()+"\t"+temp.getDate());
-					}
+					
 					System.out.println("1. 입차 2. 출차 3. 매출확인"); int ch = scanner.nextInt();
 			//////////////////////////////////////////////// 입차 /////////////////////////////////////////////
 					if (ch == 1) {
