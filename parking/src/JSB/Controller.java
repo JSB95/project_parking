@@ -122,6 +122,9 @@ public class Controller {
 				long min1 = (long) Math.ceil((min - 1440 * day) / 10.0) * 10;
 				min = min1;
 				fee = 50000 * day + min * 100;
+				if (min > 500) {
+					fee = 50000 * (day + 1);
+				}
 			} else {
 				System.out.println("주차시간 : " + day + "일" + min + "분");
 				long min1 = (long) Math.ceil((min - 1440 * day) / 10.0) * 10;
