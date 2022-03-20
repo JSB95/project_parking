@@ -249,7 +249,8 @@ public class Controller {
 				data = true;	
 			} 
 		}
-		for(int i=0; i<31; i++) { 
+		
+		for(int i=0; i<31; i++) { // 일별 합계 출력
 			if(sum[i]!=0) {
 				System.out.println((i+1)+"일\t"+sum[i]+"원");
 				sum[i]=0;
@@ -257,17 +258,9 @@ public class Controller {
 		}
 		
 		if(data==true) {
-			return true;
+			return true;  // 연도 월 일치하는 데이터 있음
 		}
-		return false;
-
-	}
-	// 일별 매출 합계 메소드
-	public static void sum() {
-		int sum = 0;
-		for(Count temp : countlist) {
-			sum += temp.getProfit();
-		}
+		return false; // 연도 월 일치하는 데이터 없음
 	}
 	
 	// 타워 저장 메소드
