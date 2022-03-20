@@ -8,9 +8,11 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import HSB.Count;
 import JSB.Car;
 
 
@@ -228,8 +230,23 @@ public class Controller {
 	}
 	
 	// 매출확인 메소드
-	public static void list(int year, int month) {
+	public static boolean list(int year, int month) {
 		
+		for(Count temp : countlist) {
+			if(temp.getYear()==year && temp.getMonth()==month) {
+				int sum = 0;
+				for(Count temp2 : countlist) {
+					
+					sum += temp2.getProfit();
+				}
+				System.out.print(temp.getDay()+"일\t" + sum +"원\n");
+				return true;
+				
+			} 
+		}
+		
+		return false;
+
 	}
 	
 	// 타워 저장 메소드

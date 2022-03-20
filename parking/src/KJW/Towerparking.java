@@ -14,7 +14,8 @@ public class Towerparking {
 		
 		Controller.car_load(); // 파일 불러오기
 		Controller.towerload(); 
-
+		Controller.load();
+		
 			while (true) {
 				Date date = new Date();
 				try {
@@ -35,7 +36,7 @@ public class Towerparking {
 						System.out.println("0000~9999 사이의 차량번호를 입력해주세요.[주차실패]");	
 					}else if(result==3) {
 						
-						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-hh-mm");
+						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm");
 						String intime = sdf.format(date);
 						boolean result2 = Controller.inCar(intime, car_num);
 						if(result2) {
@@ -60,11 +61,15 @@ public class Towerparking {
 							System.out.println("주차된 차량과 일치하는 차량번호가 없습니다.[출차실패]");
 						}
 						
-						
+			///////////////////////////////////////////// 매출 확인 ////////////////////////////////////////////////////			
 					} else if (ch == 3) {
 						System.out.print("연도 : "); int year = scanner.nextInt();
 						System.out.print("월 : ");	int month = scanner.nextInt();
-						Controller.list(year,month);
+						boolean result = Controller.list(year, month);
+						if(result) {
+							
+						}else System.out.println("해당 년도 월의 매출이 없습니다.");
+						
 					} else {
 						System.err.println("error");
 					}
