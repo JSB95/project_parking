@@ -258,13 +258,8 @@ public class Controller {
 			if(sum[i]!=0) {
 				System.out.println((i+1)+"일\t"+sum[i]+"원");
 				sum[i]=0;
-			}
-			
+			}	
 		}
-		
-		// 일별 매출 합계 계산
-		
-		
 		
 		if(data==true) {
 			return true;
