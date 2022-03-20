@@ -141,6 +141,7 @@ public class Controller {
 			
 			
 			System.out.println("ฑÝพื : " + decimalFormat.format(fee));
+			
 			return;
 
 		}
