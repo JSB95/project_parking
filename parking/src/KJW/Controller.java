@@ -226,12 +226,6 @@ public class Controller {
 		}
 	}
 	
-	// 메소드
-	public static void alist(int year, int month) {
-		
-	}
-	
-	
 	
 	// 매출확인 메소드
 	public static boolean list(int year, int month) {
@@ -246,16 +240,18 @@ public class Controller {
 						sum[i] += temp.getProfit(); // 임시 저장용 배열에 저장
 					}
 				}
-				data = true;	
+					
 			} 
 		}
 		
 		for(int i=0; i<31; i++) { // 일별 합계 출력
 			if(sum[i]!=0) {
 				System.out.println((i+1)+"일\t"+sum[i]+"원");
+				data = true;
 				sum[i]=0;
 			}	
 		}
+		
 		
 		if(data==true) {
 			return true;  // 연도 월 일치하는 데이터 있음
