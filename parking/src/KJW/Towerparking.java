@@ -74,7 +74,7 @@ public class Towerparking {
 						System.err.println("error");
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
+					System.out.println("잘못된 입력입니다.");;
 					scanner = new Scanner(System.in);
 				}
 			}

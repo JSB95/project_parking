@@ -25,6 +25,8 @@ public class Controller {
 	public static ArrayList<Car> carlist = new ArrayList<>();
 	// 매출 리스트
 	public static ArrayList<Count> countlist = new ArrayList<Count>();
+	// 임시 저장용 리스트
+	public static int[] sum = new int[31]; 
 	// 주차공간 리스트
 	public static String[] tower = { "[    ]", "[    ]", "[    ]", "[    ]",
 									"[    ]", "[    ]", "[    ]", "[    ]",
@@ -229,24 +231,53 @@ public class Controller {
 		}
 	}
 	
+	// 메소드
+	public static void alist(int year, int month) {
+		
+	}
+	
+	
+	
 	// 매출확인 메소드
 	public static boolean list(int year, int month) {
+		boolean data = false;
 		
-		for(Count temp : countlist) {
-			if(temp.getYear()==year && temp.getMonth()==month) {
-				int sum = 0;
-				for(Count temp2 : countlist) {
-					
-					sum += temp2.getProfit();
+		// 연도 월 일치하는 데이터 따로 저장
+		
+		for(Count temp : countlist) { // 매출 리스트 불러와서
+			if(temp.getYear()==year && temp.getMonth()==month) { // 연도 월 일치하면
+				for(int i=0; i<31; i++) { // i = 날짜
+					if(temp.getDay()==i+1) { // 날짜가 일치하면
+						sum[i] += temp.getProfit(); // 임시 저장용 배열에 저장
+					}
 				}
-				System.out.print(temp.getDay()+"일\t" + sum +"원\n");
-				return true;
-				
+				data = true;	
 			} 
 		}
+		for(int i=0; i<31; i++) { 
+			if(sum[i]!=0) {
+				System.out.println((i+1)+"일\t"+sum[i]+"원");
+				sum[i]=0;
+			}
+			
+		}
 		
+		// 일별 매출 합계 계산
+		
+		
+		
+		if(data==true) {
+			return true;
+		}
 		return false;
 
+	}
+	// 일별 매출 합계 메소드
+	public static void sum() {
+		int sum = 0;
+		for(Count temp : countlist) {
+			sum += temp.getProfit();
+		}
 	}
 	
 	// 타워 저장 메소드
