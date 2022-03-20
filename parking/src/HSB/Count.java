@@ -6,15 +6,17 @@ public class Count {
 	
 	// 필드
 	private int year, month, day;
+	private int profit; // 매출
 	
 	// 생성자
 	public Count() {
 	}
 
-	public Count(int year, int month, int day) {
+	public Count(int year, int month, int day, int profit) {
 		this.year = year;
 		this.month = month;
 		this.day = day;
+		this.profit = profit;
 	}
 
 	
@@ -42,7 +44,14 @@ public class Count {
 	public void setDay(int day) {
 		this.day = day;
 	}
+
+	public int getProfit() {
+		return profit;
+	}
+
+	public void setProfit(int profit) {
+		this.profit = profit;
+	}
+
 	
-
-
 }

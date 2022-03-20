@@ -14,7 +14,7 @@ public class Towerparking {
 		
 		Controller.car_load(); // 파일 불러오기
 		Controller.towerload(); 
-		
+
 			while (true) {
 				Date date = new Date();
 				try {
@@ -22,9 +22,7 @@ public class Towerparking {
 					
 					Controller.print();
 					
-					for(Car temp : Controller.carlist) { // 확인용 임시 데이터
-						System.out.println(temp.getCar()+"\t"+temp.getDate());
-					}
+					
 					System.out.println("1. 입차 2. 출차 3. 매출확인"); int ch = scanner.nextInt();
 			//////////////////////////////////////////////// 입차 /////////////////////////////////////////////
 					if (ch == 1) {
@@ -37,7 +35,7 @@ public class Towerparking {
 						System.out.println("0000~9999 사이의 차량번호를 입력해주세요.[주차실패]");	
 					}else if(result==3) {
 						
-						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm");
+						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-hh-mm");
 						String intime = sdf.format(date);
 						boolean result2 = Controller.inCar(intime, car_num);
 						if(result2) {
@@ -52,7 +50,9 @@ public class Towerparking {
 						System.out.print("차량 번호 입력 : "); int car_num = scanner.nextInt();
 						int result = Controller.check(car_num);
 						if(result==1) {
+							
 							Controller.outCar(car_num);
+							
 							System.out.println("출차가 완료되었습니다.");
 						}else if(result==2) {
 							System.out.println("0000~9999 사이의 차량번호를 입력해주세요.[출차실패]");	

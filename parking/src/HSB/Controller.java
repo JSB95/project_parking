@@ -12,6 +12,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import JSB.Car;
+
 
 
 
@@ -23,9 +25,10 @@ public class Controller {
 	// 매출 리스트
 	public static ArrayList<Count> countlist = new ArrayList<Count>();
 	// 주차공간 리스트
-	public static String[] tower = { 	"[    ]", "[    ]", "[    ]", "[    ]",
-										"[    ]", "[    ]", "[    ]", "[    ]",
-										"[    ]", "[    ]", "[    ]", "[    ]" };
+	public static String[] tower = { "[    ]", "[    ]", "[    ]", "[    ]",
+									"[    ]", "[    ]", "[    ]", "[    ]",
+									"[    ]", "[    ]", "[    ]", "[    ]" };
+	
 	
 	
 	// 출력 메소드
@@ -34,6 +37,7 @@ public class Controller {
 			System.out.print(tower[i]);
 			if(i%4==3) System.out.println();
 		}
+
 	}
 	
 	// 중복체크, 유효성검사 메소드
@@ -87,10 +91,9 @@ public class Controller {
 				for(int j=0; j<tower.length; j++) {
 					if(tower[j].equals("["+carnum+"]")) {
 						tower[j]="[    ]";
-						count(carnum);
 					}
 				}
-
+				count(carnum);
 				carlist.remove(i);
 				car_save();
 				towersave();
@@ -102,56 +105,59 @@ public class Controller {
 	
 	// 금액 계산 메소드
 	public static void count(String carnum) throws ParseException {
-		DecimalFormat decimalFormat = new DecimalFormat("###,###원");
-		Date date = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm", Locale.KOREA);
-		// 출차 하는 시간
-		String dateend = "2022-03-25-10-02";
-		long fee = 0;
-		
-		for (Car temp : carlist) {
-
-			Date d1 = sdf.parse(temp.getDate());
-			Date d2 = sdf.parse(dateend);
+			DecimalFormat decimalFormat = new DecimalFormat("###,###원");
+			Date date = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm", Locale.KOREA);
+			// 출차 하는 시간
+			String dateend = sdf.format(date);
 			
-			long diff = d2.getTime() - d1.getTime();
-			long min = diff / (1000 * 60);
-			long day = diff / (1000 * 60 * 60 * 24);
-			if (day > 0) {
+			long fee = 0;
+			
+			for (Car temp : carlist) {
+
+				Date d1 = sdf.parse(temp.getDate());
+				Date d2 = sdf.parse(dateend);
 				
-				System.out.println("주차시간 : " + day + "일" + (min - 1440 * day) + "분");
-				long min1 = (long) Math.ceil((min - 1440 * day) / 10.0) * 10;
-				min = min1;
-				fee = 50000 * day + min * 100;
-				if(min>500) {
-					fee=50000*(day+1);
+				long diff = d2.getTime() - d1.getTime();
+				long min = diff / (1000 * 60);
+				long day = diff / (1000 * 60 * 60 * 24);
+				if (day > 0) {
+					
+					System.out.println("주차시간 : " + day + "일" + (min - 1440 * day) + "분");
+					long min1 = (long) Math.ceil((min - 1440 * day) / 10.0) * 10;
+					min = min1;
+					fee = 50000 * day + min * 100;
+				} else {
+					System.out.println("주차시간 : " + day + "일" + min + "분");
+					long min1 = (long) Math.ceil((min - 1440 * day) / 10.0) * 10;
+					min = min1;
+					fee = min * 100 - 3000;
+					if (fee > 50000) {
+						fee = 50000;
+					}
+					if (min <= 30) {
+						fee = 0;
+					}
+					
 				}
-			} else {
-				System.out.println("주차시간 : " + day + "일" + min + "분");
-				long min1 = (long) Math.ceil((min - 1440 * day) / 10.0) * 10;
-				min = min1;
-				fee = min * 100 - 3000;
-				if (fee > 50000) {
-					fee = 50000;
-				}
-				if (min <= 30) {
-					fee = 0;
-				}
+				
+				String[] a = dateend.split("-");
+				
+				Count temp2 = new Count(Integer.parseInt(a[0]),Integer.parseInt(a[1]),Integer.parseInt(a[2]),(int)fee);
+				countlist.add(temp2);
+				
+				System.out.println("금액 : " + decimalFormat.format(fee));
+				
+				save();
+				return;
 
 			}
 			
-				
-			System.out.println("금액 : " + decimalFormat.format(fee));
 			
-			
-			
-			
-			return;
-
 		}
-		
-		
-	}
+	
+	
+
 	// 차량 저장 메소드
 	public static void car_save() {
 		try {
@@ -165,8 +171,6 @@ public class Controller {
 		}
 	};
 	
-	
-
 	// 차량 불러오기 메소드
 	public static void car_load() {
 		try {
@@ -187,47 +191,73 @@ public class Controller {
 		} catch(Exception e) {
 			System.out.println("알림)) 파일 로드 실패(관리자에게 문의)");
 		}
-	};
-		
+	}
+	
 	// 매출 저장 메소드
 	public static void save() {
-		
+
+		try {
+			FileOutputStream outputStream = new FileOutputStream("D:/java/매출파일.txt");
+			for(Count temp : countlist) {
+				String countfile = temp.getYear()+","+temp.getMonth()+","+temp.getDay()+","+temp.getProfit()+"\n";
+				outputStream.write(countfile.getBytes());
+			}
+		}catch(Exception e) {
+			System.out.println("알림)) 파일 저장 실패(관리자에게 문의)");
+		}
 	}
 	// 매출 불러오기 메소드
 	public static void load() {
-		
-	}
-		
-	// 매출확인 메소드
-	public static void list(int year, int month) {
-		Calendar calendar = Calendar.getInstance();
-		System.out.println("-----------"+month+"월 sales list----------------");
-		while( true ) {
+		try {
+			FileInputStream fileInputStream = new FileInputStream("D:/java/매출파일.txt");
+			byte[] bytes = new byte[1024];
+			fileInputStream.read(bytes);
+			String file = new String(bytes);
+			String[] countfile = file.split("\n");
+			int i=0; 
+			for(String temp : countfile) { 
+				if(i+1==countfile.length) break;			
+				String[] field = temp.split(",");
+				Count count = new Count(Integer.parseInt(field[0]),Integer.parseInt(field[1]),Integer.parseInt(field[2]),Integer.parseInt(field[3]) );
+				countlist.add(count);
+				i++; 
+			}
 			
-			if(month<13) {
-				if(0<month) {
-			calendar.set(year, month-1, 1);
-					int day = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-				System.out.println("\tday"+"\t\tsales");
-				System.out.println();
+		} catch(Exception e) {
+			System.out.println("알림)) 파일 로드 실패(관리자에게 문의)");
+		}
+	}
+	
+	// 매출확인 메소드
+	public static void list(int year, int month) {	
+		Calendar calendar = Calendar.getInstance();
+	System.out.println("-----------"+month+"월 sales list----------------");
+	while( true ) {
+		
+		if(month<13) {
+			if(0<month) {
+		calendar.set(year, month-1, 1);
+				int day = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+			System.out.println("\tday"+"\t\tsales");
+			System.out.println();
 
-				for(int i = 1; i<= day ; i++) {
-					System.out.println("\t"+i+"\t\t"+countlist);
-				}
-				System.out.println();
-				}else {
-					System.out.println("알수없는행동입니다.");
-				}
+			for(int i = 1; i<= day ; i++) {
+			
+				System.out.println("\t"+i+"\t\t"+countlist);
+			}
+			System.out.println();
 			}else {
 				System.out.println("알수없는행동입니다.");
 			}
-				break;
-		}	
-		 	
-		 System.out.println("-----------------------------------------");
-		 return;
-	}
+		}else {
+			System.out.println("알수없는행동입니다.");
+		}
+			break;
+	}	
+	 	
 		
+	}
+	
 	// 타워 저장 메소드
 	public static void towersave() {
 
@@ -261,6 +291,8 @@ public class Controller {
 		} catch(Exception e) {
 			System.out.println("알림)) 파일 로드 실패(관리자에게 문의)");
 		}
-	}
 		
-}
+	}
+	
+	
+} // c e
