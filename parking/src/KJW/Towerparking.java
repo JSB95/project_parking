@@ -11,10 +11,7 @@ public class Towerparking {
 		
 		
 		Scanner scanner = new Scanner(System.in);
-		// 초기 파일 생성
-		Controller.save();
-		Controller.towersave();
-		Controller.car_save();
+		
 		
 		// 파일 불러오기
 		Controller.car_load(); 
@@ -70,16 +67,19 @@ public class Towerparking {
 					} else if (ch == 3) {
 						System.out.print("연도 : "); int year = scanner.nextInt();
 						System.out.print("월 : ");	int month = scanner.nextInt();
-						boolean result = Controller.list(year, month);
-						if(result) {
+						int result = Controller.list(year, month);
+						if(result==1) {
 							
-						}else System.out.println("해당 년도 월의 매출이 없습니다.");
+						}else if(result==2) {
+							System.out.println("해당 년도 월의 매출이 없습니다.");
+						}
+						else if(result==3) System.out.println("1~12 사이 숫자를 입력해주세요.");
 						
 					} else {
 						System.err.println("error");
 					}
 				} catch (Exception e) {
-					System.out.println("잘못된 입력입니다.");;
+					System.out.println("잘못된 입력입니다.");
 					scanner = new Scanner(System.in);
 				}
 			}
