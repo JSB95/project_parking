@@ -246,6 +246,7 @@ public class Controller {
 		
 		for(int i=0; i<31; i++) { // 일별 합계 출력
 			if(sum[i]!=0) {
+				System.out.println(year+"년\t"+month+"월 매출");
 				System.out.println((i+1)+"일\t"+sum[i]+"원");
 				data = true;
 				sum[i]=0;

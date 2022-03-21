@@ -11,8 +11,13 @@ public class Towerparking {
 		
 		
 		Scanner scanner = new Scanner(System.in);
+		// 초기 파일 생성
+		Controller.save();
+		Controller.towersave();
+		Controller.car_save();
 		
-		Controller.car_load(); // 파일 불러오기
+		// 파일 불러오기
+		Controller.car_load(); 
 		Controller.towerload(); 
 		Controller.load();
 		
@@ -20,10 +25,10 @@ public class Towerparking {
 				Date date = new Date();
 				try {
 					// 주차공간 출력	
-					
+					System.out.println("---------타워 주차 프로그램---------");
 					Controller.print();
 					
-					
+					System.out.println("\n-------------메뉴--------------");
 					System.out.println("1. 입차 2. 출차 3. 매출확인"); int ch = scanner.nextInt();
 			//////////////////////////////////////////////// 입차 /////////////////////////////////////////////
 					if (ch == 1) {
