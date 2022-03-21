@@ -5,14 +5,10 @@ import java.io.FileOutputStream;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import JSB.Car;
 
 
 
@@ -24,6 +20,8 @@ public class Controller {
 	public static ArrayList<Car> carlist = new ArrayList<>();
 	// 매출 리스트
 	public static ArrayList<Count> countlist = new ArrayList<Count>();
+	// 임시 저장용 리스트
+	public static int[] sum = new int[31]; 
 	// 주차공간 리스트
 	public static String[] tower = { "[    ]", "[    ]", "[    ]", "[    ]",
 									"[    ]", "[    ]", "[    ]", "[    ]",
@@ -34,6 +32,7 @@ public class Controller {
 	// 출력 메소드
 	public static void print() {
 		for(int i=0; i<tower.length; i++) {
+			
 			System.out.print(tower[i]);
 			if(i%4==3) System.out.println();
 		}
@@ -104,12 +103,12 @@ public class Controller {
 	};
 	
 	// 금액 계산 메소드
-	public static void count(String carnum) throws ParseException {
+		public static void count(String carnum) throws ParseException {
 			DecimalFormat decimalFormat = new DecimalFormat("###,###원");
 			Date date = new Date();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm", Locale.KOREA);
-			// 출차 하는 시간								
-			String dateend = sdf.format(date);
+			// 출차 하는 시간
+			String dateend = "2022-03-23-19-20";
 			
 			long fee = 0;
 			
@@ -140,6 +139,7 @@ public class Controller {
 					}
 					
 				}
+		
 				
 				String[] a = dateend.split("-");
 				
@@ -161,7 +161,7 @@ public class Controller {
 	// 차량 저장 메소드
 	public static void car_save() {
 		try {
-			FileOutputStream outputStream = new FileOutputStream("D:/java/차량파일.txt");
+			FileOutputStream outputStream = new FileOutputStream("C:/java/차량파일.txt");
 			for(Car temp : carlist) {
 				String carfile = temp.getDate()+","+temp.getCar()+","+temp.getTower()+"\n";
 				outputStream.write(carfile.getBytes());
@@ -174,7 +174,7 @@ public class Controller {
 	// 차량 불러오기 메소드
 	public static void car_load() {
 		try {
-			FileInputStream fileInputStream = new FileInputStream("D:/java/차량파일.txt");
+			FileInputStream fileInputStream = new FileInputStream("C:/java/차량파일.txt");
 			byte[] bytes = new byte[1024];
 			fileInputStream.read(bytes);
 			String file = new String(bytes);
@@ -197,7 +197,7 @@ public class Controller {
 	public static void save() {
 
 		try {
-			FileOutputStream outputStream = new FileOutputStream("D:/java/매출파일.txt");
+			FileOutputStream outputStream = new FileOutputStream("C:/java/매출파일.txt");
 			for(Count temp : countlist) {
 				String countfile = temp.getYear()+","+temp.getMonth()+","+temp.getDay()+","+temp.getProfit()+"\n";
 				outputStream.write(countfile.getBytes());
@@ -209,7 +209,7 @@ public class Controller {
 	// 매출 불러오기 메소드
 	public static void load() {
 		try {
-			FileInputStream fileInputStream = new FileInputStream("D:/java/매출파일.txt");
+			FileInputStream fileInputStream = new FileInputStream("C:/java/매출파일.txt");
 			byte[] bytes = new byte[1024];
 			fileInputStream.read(bytes);
 			String file = new String(bytes);
@@ -228,45 +228,49 @@ public class Controller {
 		}
 	}
 	
+	
 	// 매출확인 메소드
-	public static void list(int year, int month) {	
-		Calendar calendar = Calendar.getInstance();
-		while( true ) {
-			
-			if(month<13) {
-				if(0<month) {
-					Count count = new Count();
-					
-					System.out.println("-----------"+month+"월 sales list-----------------");
-					calendar.set(year, month-1, 1);
-					int day = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-					System.out.println("\tday"+"\t\tsales");
-					System.out.println();
-					
-				for(int i = 1; i<= day ; i++) {
-			
-					
-					System.out.println("\t"+i+"\t\t"+countlist.toString());
+	public static boolean list(int year, int month) {
+		boolean data = false;
 		
+		// 연도 월 일치하는 데이터 따로 저장
+		System.out.println("---------"+year+"년"+month+"월"+"-----------");
+		for(Count temp : countlist) { // 매출 리스트 불러와서
+			if(temp.getYear()==year && temp.getMonth()==month) { // 연도 월 일치하면
+				for(int i=0; i<31; i++) { // i = 날짜
+					if(temp.getDay()==i+1) { // 날짜가 일치하면
+						sum[i] += temp.getProfit(); // 임시 저장용 배열에 저장
+					}
+				}
 					
+			} 
+		}
+		
+		for(int i=0; i<31; i++) { // 일별 합계 출력
+			
+					DecimalFormat df =new DecimalFormat("0");
+					df= new DecimalFormat("#,###원");
+					if(sum[i]!=0) {
+						
+						System.out.println((i+1)+"일\t"+df.format(sum[i]));
+						
+						data = true;
+						sum[i]=0;
+					}	
 				}
-				System.out.println();
-				System.out.println("------------------------------------------");
-				}else {
-					System.out.println("알수없는행동입니다.");
-				}
-			}else {
-				System.out.println("알수없는행동입니다.");
-			}			
-			break;
-		}		
+		
+		System.out.println("----------------------------");
+		if(data==true) {
+			return true;  // 연도 월 일치하는 데이터 있음
+		}
+		return false; // 연도 월 일치하는 데이터 없음
 	}
 	
 	// 타워 저장 메소드
 	public static void towersave() {
 
 		try {
-			FileOutputStream outputStream = new FileOutputStream("D:/java/타워파일.txt");
+			FileOutputStream outputStream = new FileOutputStream("C:/java/타워파일.txt");
 			for(String temp : tower) {
 				String towerfile = temp+"\n";
 				outputStream.write(towerfile.getBytes());
@@ -279,7 +283,7 @@ public class Controller {
 	// 타워 불러오기 메소드
 	public static void towerload() {
 		try {
-			FileInputStream fileInputStream = new FileInputStream("D:/java/타워파일.txt");
+			FileInputStream fileInputStream = new FileInputStream("C:/java/타워파일.txt");
 			byte[] bytes = new byte[1024];
 			fileInputStream.read(bytes);
 			String file = new String(bytes);
