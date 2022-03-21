@@ -20,7 +20,7 @@ public class Controller {
 	public static ArrayList<Car> carlist = new ArrayList<>();
 	// 매출 리스트
 	public static ArrayList<Count> countlist = new ArrayList<Count>();
-	// 임시 저장용 리스트
+	// 임시 저장용 배열
 	public static int[] sum = new int[31]; 
 	// 주차공간 리스트
 	public static String[] tower = { "[    ]", "[    ]", "[    ]", "[    ]",
@@ -139,6 +139,7 @@ public class Controller {
 					
 				}
 				
+				
 				String[] a = dateend.split("-");
 				
 				Count temp2 = new Count(Integer.parseInt(a[0]),Integer.parseInt(a[1]),Integer.parseInt(a[2]),(int)fee);
@@ -228,36 +229,42 @@ public class Controller {
 	
 	
 	// 매출확인 메소드
-	public static boolean list(int year, int month) {
+	public static int list(int year, int month) {
 		boolean data = false;
-		
-		// 연도 월 일치하는 데이터 따로 저장
-		
-		for(Count temp : countlist) { // 매출 리스트 불러와서
-			if(temp.getYear()==year && temp.getMonth()==month) { // 연도 월 일치하면
-				for(int i=0; i<31; i++) { // i = 날짜
-					if(temp.getDay()==i+1) { // 날짜가 일치하면
-						sum[i] += temp.getProfit(); // 임시 저장용 배열에 저장
+		if(month>0 && month<13) {
+			// 연도 월 일치하는 데이터 따로 저장
+			
+			for(Count temp : countlist) { // 매출 리스트 불러와서
+				if(temp.getYear()==year && temp.getMonth()==month) { // 연도 월 일치하면
+					for(int i=0; i<31; i++) { // i = 날짜
+						if(temp.getDay()==i+1) { // 날짜가 일치하면
+							sum[i] += temp.getProfit(); // 임시 저장용 배열에 저장
+						}
 					}
-				}
+						
+				} 
+			}
+			System.out.println("---------"+year+"년"+month+"월"+"-----------");
+			for(int i=0; i<31; i++) { // 일별 합계 출력
+				
+				DecimalFormat df =new DecimalFormat("0");
+				df= new DecimalFormat("#,###원");
+				if(sum[i]!=0) {
+
+					System.out.println((i+1)+"일\t"+df.format(sum[i]));
 					
-			} 
-		}
-		
-		for(int i=0; i<31; i++) { // 일별 합계 출력
-			if(sum[i]!=0) {
-				System.out.println(year+"년\t"+month+"월 매출");
-				System.out.println((i+1)+"일\t"+sum[i]+"원");
-				data = true;
-				sum[i]=0;
-			}	
-		}
+					data = true;
+					sum[i]=0;
+				}	
+			}
+			System.out.println("----------------------------");
+		} else return 3; // 1~12월 사이가 아님3
 		
 		
 		if(data==true) {
-			return true;  // 연도 월 일치하는 데이터 있음
+			return 1;  // 연도 월 일치하는 데이터 있음
 		}
-		return false; // 연도 월 일치하는 데이터 없음
+		return 2; // 연도 월 일치하는 데이터 없음
 	}
 	
 	// 타워 저장 메소드
@@ -295,6 +302,7 @@ public class Controller {
 		}
 		
 	}
+	
 	
 	
 } // c e
